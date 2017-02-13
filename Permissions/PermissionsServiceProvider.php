@@ -2,7 +2,7 @@
 namespace ImmediateSolutions\Support\Permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Illuminate\Config\Repository as Config;
 
 /**
