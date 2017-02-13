@@ -2,7 +2,7 @@
 namespace ImmediateSolutions\Support\Permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Config\Repository as Config;
 
 /**
@@ -65,7 +65,7 @@ class PermissionsServiceProvider extends ServiceProvider
         $permissions = $this->app->make(PermissionsInterface::class);
 
         if (!$permissions->has($definition->getProtectors($method))) {
-            throw new AccessDeniedException(ProtectableInterface::ACCESS_DENIED);
+            throw new AccessDeniedHttpException(ProtectableInterface::ACCESS_DENIED);
         }
     }
 
