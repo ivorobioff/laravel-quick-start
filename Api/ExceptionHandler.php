@@ -5,11 +5,13 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use ImmediateSolutions\Support\Api\Verify\VerifiableInterface;
 use ImmediateSolutions\Support\Validation\Error;
 use ImmediateSolutions\Support\Validation\ErrorsThrowableCollection;
 use ImmediateSolutions\Support\Validation\PresentableException;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @author Igor Vorobiov<igor.vorobioff@gmail.com>
@@ -80,7 +82,26 @@ class ExceptionHandler extends Handler
      */
     private function writeHttpException(HttpException $exception)
     {
-        return $this->writeException($exception->getStatusCode(), $exception->getMessage());
+        return $this->writeException($exception->getStatusCode(), $this->getHttpExceptionMessage($exception));
+    }
+
+    /**
+     * @param HttpException $exception
+     * @return string
+     */
+    private function getHttpExceptionMessage(HttpException $exception)
+    {
+        $message = $exception->getMessage();
+
+        if ($message){
+            return $message;
+        }
+
+        if ($exception instanceof NotFoundHttpException){
+            return VerifiableInterface::NOT_FOUND;
+        }
+
+        return 'Request Failed';
     }
 
     /**
