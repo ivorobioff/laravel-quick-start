@@ -1,7 +1,6 @@
 <?php
-namespace ImmediateSolutions\Support\Api;
+namespace ImmediateSolutions\Support\Pagination;
 use ImmediateSolutions\Support\Core\Options\PaginationOptions;
-use ImmediateSolutions\Support\Pagination\AdapterInterface;
 
 /**
  * @author Igor Vorobiov <igor.vorobioff@gmail.com>

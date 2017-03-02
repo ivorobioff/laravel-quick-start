@@ -1,7 +1,6 @@
 <?php
-namespace ImmediateSolutions\Support\Api;
+namespace ImmediateSolutions\Support\Pagination;
 use Illuminate\Http\Request;
-use ImmediateSolutions\Support\Pagination\DescriberInterface;
 
 /**
  * @author Igor Vorobiov<igor.vorobioff@gmail.com>

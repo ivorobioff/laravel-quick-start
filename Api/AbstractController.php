@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use ImmediateSolutions\Support\Api\Verify\VerifiableInterface;
 use ImmediateSolutions\Support\Pagination\AdapterInterface;
+use ImmediateSolutions\Support\Pagination\Describer;
 use ImmediateSolutions\Support\Pagination\PaginationProviderInterface;
 use ImmediateSolutions\Support\Pagination\Paginator;
 use ImmediateSolutions\Support\Permissions\ProtectableInterface;
