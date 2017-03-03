@@ -1,7 +1,9 @@
 <?php
-namespace ImmediateSolutions\Support\Api\Verify;
+namespace ImmediateSolutions\Support\Api;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use ImmediateSolutions\Support\Api\Verify\Action;
+use ImmediateSolutions\Support\Api\Verify\VerifiableInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use RuntimeException;
 use ReflectionMethod;

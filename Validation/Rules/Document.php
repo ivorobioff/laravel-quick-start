@@ -1,8 +1,7 @@
 <?php
-namespace ImmediateSolutions\Support\Api\Validation\Rules;
+namespace ImmediateSolutions\Support\Validation\Rules;
 use Illuminate\Http\UploadedFile;
 use ImmediateSolutions\Support\Validation\Error;
-use ImmediateSolutions\Support\Validation\Rules\AbstractRule;
 
 /**
  *

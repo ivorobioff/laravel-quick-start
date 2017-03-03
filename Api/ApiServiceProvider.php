@@ -16,7 +16,7 @@ class ApiServiceProvider extends ServiceProvider
     {
         $this->app->bind(ResponseFactoryInterface::class, JsonResponseFactory::class);
 
-        $this->app->afterResolving(AbstractProcessor::class, function(AbstractProcessor $processor){
+        $this->app->afterResolving(Processor::class, function(Processor $processor){
             $processor->validate();
         });
     }
