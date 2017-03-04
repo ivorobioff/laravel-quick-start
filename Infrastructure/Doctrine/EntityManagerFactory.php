@@ -68,7 +68,7 @@ class EntityManagerFactory
         $setup->setAutoGenerateProxyClasses(array_get($config, 'proxy.auto', false));
 
         $setup->setMetadataDriverImpl(new CompositeDriver([
-            new PackageDriver($packages),
+            new PackageDriver($packages, new Describer()),
             new SimpleDriver(array_get($config, 'entities', []))
         ]));
 
