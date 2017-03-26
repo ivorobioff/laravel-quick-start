@@ -16,13 +16,21 @@ class Describer implements DescriberInterface
 		return 'ImmediateSolutions\\Core\\' . $package . '\\Entities';
 	}
 
+	/**
+	 * @param string $package
+	 * @return string
+	 */
 	public function getMetadataNamespace($package)
 	{
 		return 'ImmediateSolutions\Infrastructure\DAL\\' . $package . '\Metadata';
 	}
 
+	/**
+	 * @param string $package
+	 * @return string
+	 */
 	public function getEntityPath($package)
 	{
-		app_path('Core/' . str_replace('\\', '/', $package) . '/Entities');
+		return app_path('Core/' . str_replace('\\', '/', $package) . '/Entities');
 	}
 }
