@@ -23,22 +23,6 @@ abstract class AbstractSerializer
     }
 
     /**
-     * @param string $serializer
-     * @param object $object
-     * @param $initializer
-     */
-    protected function delegate($serializer, $object, callable $initializer = null)
-    {
-        $serializer = $this->container->make($serializer);
-
-        if ($initializer){
-            $initializer($serializer);
-        }
-
-        return $serializer($object);
-    }
-
-    /**
      * @param DateTime $datetime
      * @return string
      */
