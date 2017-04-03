@@ -40,7 +40,7 @@ abstract class SearchableProcessor extends AbstractSearchableProcessor
     public function getData()
     {
         if ($this->data === null){
-            $this->data = parse_url_query($this->request->query->all());
+            $this->data = $this->request->query->all();
         }
 
         return $this->data;
