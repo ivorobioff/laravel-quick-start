@@ -6,6 +6,7 @@ use Illuminate\Contracts\Container\Container;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\Configuration;
 use Doctrine\DBAL\Types\Type;
+use ImmediateSolutions\Support\Infrastructure\Doctrine\Metadata\DescriberInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use ImmediateSolutions\Support\Infrastructure\Doctrine\Metadata\SimpleDriver;
@@ -34,13 +35,15 @@ class EntityManagerFactory
     {
         $config = $container->make(Config::class)->get('doctrine');
         $packages = $container->make(Config::class)->get('app.packages');
+        $describer = $container->make(DescriberInterface::class);
 
         $em = EntityManager::create(
             $config['connections'][$config['db']],
-            $this->createConfiguration($config, $packages)
+            $this->createConfiguration($config, $packages, $describer)
         );
 
         $this->registerTypes(
+            $describer,
             $em->getConnection(),
             $packages,
             array_get($config, 'types', [])
@@ -52,9 +55,10 @@ class EntityManagerFactory
     /**
      * @param array $config
      * @param array $packages
+     * @param DescriberInterface $describer
      * @return Configuration
      */
-    private function createConfiguration(array $config, array $packages)
+    private function createConfiguration(array $config, array $packages, DescriberInterface $describer)
     {
         $setup = Setup::createConfiguration();
 
@@ -68,7 +72,7 @@ class EntityManagerFactory
         $setup->setAutoGenerateProxyClasses(array_get($config, 'proxy.auto', false));
 
         $setup->setMetadataDriverImpl(new CompositeDriver([
-            new PackageDriver($packages, new Describer()),
+            new PackageDriver($packages, $describer),
             new SimpleDriver(array_get($config, 'entities', []))
         ]));
 
@@ -91,16 +95,16 @@ class EntityManagerFactory
     }
 
     /**
-     *
+     * @param DescriberInterface $describer
      * @param Connection $connection
      * @param array $packages
      * @param array $extra
      */
-    private function registerTypes(Connection $connection, array $packages, array $extra = [])
+    private function registerTypes(DescriberInterface $describer, Connection $connection, array $packages, array $extra = [])
     {
         foreach ($packages as $package) {
-            $path = app_path('Infrastructure/DAL/' . str_replace('\\', '/', $package) . '/Types');
-            $typeNamespace = 'ImmediateSolutions\Infrastructure\DAL\\' . $package . '\Types';
+            $path = $describer->getTypePath($package);
+            $typeNamespace = $describer->getTypeNamespace($package);
 
             if (! file_exists($path)) {
                 continue;

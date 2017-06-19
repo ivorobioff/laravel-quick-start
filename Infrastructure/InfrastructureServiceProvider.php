@@ -5,7 +5,9 @@ use Illuminate\Support\ServiceProvider;
 use ImmediateSolutions\Support\Core\Interfaces\ContainerInterface;
 use ImmediateSolutions\Support\Core\Interfaces\PasswordEncryptorInterface;
 use ImmediateSolutions\Support\Core\Interfaces\TokenGeneratorInterface;
+use ImmediateSolutions\Support\Infrastructure\Doctrine\Describer;
 use ImmediateSolutions\Support\Infrastructure\Doctrine\EntityManagerFactory;
+use ImmediateSolutions\Support\Infrastructure\Doctrine\Metadata\DescriberInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -19,6 +21,7 @@ class InfrastructureServiceProvider extends ServiceProvider
             return (new EntityManagerFactory())($this->app);
         });
 
+        $this->app->instance(DescriberInterface::class, Describer::class);
         $this->app->singleton(PasswordEncryptorInterface::class, PasswordEncryptor::class);
         $this->app->singleton(TokenGeneratorInterface::class, TokenGenerator::class);
         $this->app->singleton(ContainerInterface::class, Container::class);
